@@ -4,9 +4,9 @@ services:
     env: python
     plan: free
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python python_reklama.py"
+    startCommand: "python_reklama.py"
     envVars:
-    - key: BOT_TOKEN
-      value: 7846099131:AAEZ-tOYvsVpnYpKlF6E8Nh8WhwttzvVKb4
-    - key: ADMIN_ID
-      value: "1934337229"
+      - key: BOT_TOKEN
+        value: 7846099131:AAEZ-tOYvsVpnYpKlF6E8Nh8WhwttzvVKb4
+      - key: ADMIN_ID
+        value: "1934337229"
