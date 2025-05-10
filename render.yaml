@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: ""
-    startCommand: "python main.py"
+    startCommand: "python python_reklama.py"
     envVars:
       - key: BOT_TOKEN
         sync: false
