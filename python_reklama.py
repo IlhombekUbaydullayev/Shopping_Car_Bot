@@ -212,9 +212,20 @@ async def confirm_preview(callback: CallbackQuery, state: FSMContext):
 
 @dp.callback_query(F.data.in_(["confirm_yes", "confirm_no"]))
 async def process_confirmation(callback: CallbackQuery, state: FSMContext):
-    if callback.data == "confirm_yes":
-        data = await state.get_data()
+    # Foydalanuvchiga javobni zudlik bilan qaytaring
+    await callback.answer()
 
+    # Ma'lumotni olish va keyin darhol state ni tozalash
+    data = await state.get_data()
+    await state.clear()
+
+    # Tugmalarni olib tashlash (xatolik ehtimoliga qarshi)
+    try:
+        await callback.message.edit_reply_markup()
+    except Exception as e:
+        logging.warning(f"❗️ Tugmalarni o‘chirishda xatolik: {e}")
+
+    if callback.data == "confirm_yes":
         summary = (
             f"📢 *Yangi mashina e'loni:*\n\n"
             f"🚘 *Moshina modeli:* #{data['model']}\n"
@@ -233,17 +244,22 @@ async def process_confirmation(callback: CallbackQuery, state: FSMContext):
             InputMediaPhoto(media=img, caption=summary if i == 0 else "")
             for i, img in enumerate(data['images'])
         ]
-        await bot.send_media_group(chat_id=ADMIN_ID, media=media)
+
+        try:
+            await bot.send_media_group(chat_id=ADMIN_ID, media=media)
+        except Exception as e:
+            logging.error(f"❌ Media yuborishda xatolik: {e}")
+            await callback.message.answer("❌ E'lonni yuborishda xatolik yuz berdi. Keyinroq qayta urinib ko‘ring.")
+            return
 
         user_info = f"👤 *Foydalanuvchi:* @{callback.from_user.username or 'Noma’lum'} ({callback.from_user.id})"
         await bot.send_message(chat_id=ADMIN_ID, text=user_info)
 
-        await callback.message.edit_reply_markup()
         await callback.message.answer("✅ E'loningiz adminga yuborildi!")
+
     else:
-        await callback.message.edit_reply_markup()
         await callback.message.answer("❌ E'lon bekor qilindi. Qaytadan /elon buyrug'ini yozing.")
-    await state.clear()
+
 
 async def main():
     await dp.start_polling(bot)
