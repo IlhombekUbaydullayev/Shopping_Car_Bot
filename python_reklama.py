@@ -310,9 +310,9 @@ async def process_confirmation(callback: CallbackQuery, state: FSMContext):
             f"🚰 *Kraska:* {data['kraska']}\n"
             f"🎨 *Rangi:* {data['color']}\n"
             f"📆 *Yili:* {data['year']}\n"
-            f"📊 *Probeg:* {data['probeg']} km\n"
+            f"📊 *Probeg:* {data['probeg']}\n"
             f"⛽ *Yonilg‘i:* {data['fuel']}\n"
-            f"💵 *Narxi:* {data['price']}$\n"
+            f"💵 *Narxi:* {data['price']}\n"
             f"📞 *Tel:* +998{data['phone']}\n"
             f"📍 *Manzil:* {data['location']}\n"
         )
