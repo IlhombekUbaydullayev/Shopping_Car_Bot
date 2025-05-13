@@ -156,11 +156,9 @@ async def process_year(message: Message, state: FSMContext):
 
 @dp.message(CarForm.probeg)
 async def process_probeg(message: Message, state: FSMContext):
-    if not message.text.isdigit():
-        await message.answer("❌ Probeg faqat raqam bo‘lishi kerak.")
-        return
-    probeg = int(message.text)
-    if probeg < 0 or probeg > 1_000_000:
+    
+    probeg = message.text
+    if len(probeg) < 20:
         await message.answer("❌ Probeg 0 dan 1,000,000 gacha bo‘lishi kerak.")
         return
     await state.update_data(probeg=str(probeg))
@@ -175,12 +173,9 @@ async def process_fuel(message: Message, state: FSMContext):
 
 @dp.message(CarForm.price)
 async def process_price(message: Message, state: FSMContext):
-    if not message.text.isdigit():
-        await message.answer("❌ Narx faqat raqam bo‘lishi kerak.")
-        return
-    price = int(message.text)
-    if price < 100 or price > 50000:
-        await message.answer("❌ Narx 100 dan 50,000 gacha bo‘lishi kerak.")
+    price = message.text
+    if len(price) < 9:
+        await message.answer("❌ Narx 100$ dan 1 000 000$ gacha bo‘lishi kerak.")
         return
     await state.update_data(price=str(price))
     await state.set_state(CarForm.phone)
