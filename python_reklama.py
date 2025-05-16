@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
-ADMIN_ID = int(os.getenv("ADMIN_ID"))
+ADMIN_ID = os.getenv("ADMIN_ID")
 
 logging.basicConfig(level=logging.INFO)
 
@@ -169,7 +169,7 @@ async def process_probeg(message: Message, state: FSMContext):
 async def process_fuel(message: Message, state: FSMContext):
     await state.update_data(fuel=message.text.strip())
     await state.set_state(CarForm.price)
-    await message.answer("💵 Narxi (100–50,000 $):")
+    await message.answer("💵 Narxi (100–1 000 000 $):")
 
 @dp.message(CarForm.price)
 async def process_price(message: Message, state: FSMContext):
