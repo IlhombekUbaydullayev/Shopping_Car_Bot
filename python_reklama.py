@@ -158,7 +158,7 @@ async def process_year(message: Message, state: FSMContext):
 async def process_probeg(message: Message, state: FSMContext):
     
     probeg = message.text
-    if len(probeg) > 10:
+    if len(probeg) > 20:
         await message.answer("❌ Probeg 0 dan 1 000 000 gacha bo‘lishi kerak.")
         return
     await state.update_data(probeg=str(probeg))
